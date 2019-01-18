@@ -11,8 +11,8 @@ RUN apt-get update \
 RUN apt-get update \
     && apt-get install -y python3 python3-pip python3-dev npm
 
-# RUN wget -qO- https://deb.nodesource.com/setup_8.x | bash -
-# RUN apt-get install -y nodejs
+RUN wget -qO- https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs
 
 RUN pip3 install --upgrade pip
 RUN pip3 install jupyter jupyterlab notebook pydotplus \
@@ -37,7 +37,7 @@ RUN jupyter nbextensions_configurator enable --system
 RUN mkdir -p $(jupyter --data-dir)/nbextensions \
     && cd $(jupyter --data-dir)/nbextensions \
     && git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding
-RUN jupyter nbextension enable vim_binding/vim_binding
+#RUN jupyter nbextension enable vim_binding/vim_binding
 
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
