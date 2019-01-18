@@ -1,0 +1,55 @@
+version: '3.1'
+services:
+  python:
+    restart: always
+    container_name: jupyter
+    build:
+        context: .
+        dockerfile: Dockerfile.python3
+    ports:
+        - 127.0.0.1:8888:8888
+        - 127.0.0.1:8889:8889
+    volumes:
+        - $HOME:/home/notebooks
+        - $HOME/tweets/:/home/tweets
+    links:
+      - "db:database"
+
+  db:
+    restart: always
+    container_name: postgres
+    build:
+        context: .
+        dockerfile: Dockerfile.postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: db
+      POSTGRES_INITDB_ARGS: " "
+    ports:
+        - 127.0.0.1:5432:5432
+    volumes:
+        - ~/postgres:/var/lib/postgresql/data
+  pgadmin:
+    restart: always
+    container_name: pgadmin
+    build:
+        context: .
+        dockerfile: Dockerfile.pgadmin
+    ports:
+        - 127.0.0.1:5050:5050
+    volumes:
+        - ~/postgres:/tmp
+        - ~/postgres:/data
+    links:
+      - "db:database"
+    environment:
+        SERVER_PORT: 5050
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+        - 127.0.0.1:27017:27017
+        - 127.0.0.1:28017:28017
