@@ -10,8 +10,7 @@ services:
         - 127.0.0.1:8888:8888
         - 127.0.0.1:8889:8889
     volumes:
-        - $HOME:/home/notebooks
-        - $HOME/tweets/:/home/tweets
+        - ../:/home/notebooks/
     links:
       - "db:database"
 
@@ -30,7 +29,7 @@ services:
     ports:
         - 127.0.0.1:5432:5432
     volumes:
-        - ~/postgres:/var/lib/postgresql/data
+        - ../postgres_db:/var/lib/postgresql/data
   pgadmin:
     restart: always
     container_name: pgadmin
@@ -40,8 +39,8 @@ services:
     ports:
         - 127.0.0.1:5050:5050
     volumes:
-        - ~/postgres:/tmp
-        - ~/postgres:/data
+        - ../postgres_db:/tmp
+        - ../postgres_db:/data
     links:
       - "db:database"
     environment:
@@ -50,6 +49,9 @@ services:
   mongo:
     image: mongo
     restart: always
+    volumes:
+        - ../mongo_db:/data/db
+        #- ../mongo_db:/data/configdb
     ports:
         - 127.0.0.1:27017:27017
         - 127.0.0.1:28017:28017

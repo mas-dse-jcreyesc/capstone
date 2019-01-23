@@ -5,10 +5,12 @@ info:
 	@echo "Easy way to build and run your UCSD-MAS env."
 	@echo
 	@echo "Options:"
-	@echo "\tmake build"
-	@echo "\tmake start"
-	@echo "\tmake stop"
+	@echo "\tmake start		# START ALL DOCKER CONTAINERS"
+	@echo "\tmake stop		# STOP ALL DOCKER CONTAINERS"
 	@echo "\tmake cleanall		# For ALL elements"
+	@echo
+	@echo "Advanced:"
+	@echo "\tmake build		# Build containes but don't start them"
 	@echo "\tmake cleanadmin		# For new pgAdmin"
 	@echo "\tmake cleanpython	# For new Jupyter/Python"
 	@echo "\tmake cleandb		# For new PostgreSQL"

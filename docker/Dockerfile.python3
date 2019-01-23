@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 RUN apt-get update \
-    && apt-get install -y build-essential vim curl git wget supervisor graphviz\
+    && apt-get install -y build-essential vim curl git wget supervisor graphviz \
     && apt-get -y autoremove \
     && apt-get -y clean  \
     && apt-get autoclean  \
@@ -9,27 +9,20 @@ RUN apt-get update \
 
 
 RUN apt-get update \
-    && apt-get install -y python3 python3-pip python3-dev npm
-
-RUN wget -qO- https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get install -y nodejs
+    && apt-get install -y python3 python3-pip python3-dev
 
 RUN pip3 install --upgrade pip
-RUN pip3 install jupyter jupyterlab notebook pydotplus \
-        jupyterthemes ipykernel numpy scipy pandas findspark \
+RUN pip3 install jupyter notebook pydotplus \
+        jupyterthemes ipykernel numpy scipy pandas \
         matplotlib plotly tabulate sklearn pyarrow stop_words \
         pymysql pymongo sqlalchemy Pillow nltk psycopg2-binary \
         pysocks requests[socks] Scrapy beautifulsoup4 wget distance \
         jupyter_contrib_nbextensions ipywidgets py_stringmatching \
-        jupyterlab_widgets jupyter_nbextensions_configurator
+        jupyter_nbextensions_configurator
 
-# RUN rm -r /root/.cache/pip
+#RUN rm -r /root/.cache/pip
 
-RUN pip3 install jupyter_contrib_nbextensions
-
-# https://github.com/jupyter-widgets/ipywidgets
 RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension
-
 RUN jupyter contrib nbextension install --system
 RUN jupyter nbextensions_configurator enable --system
 
@@ -37,12 +30,8 @@ RUN jupyter nbextensions_configurator enable --system
 RUN mkdir -p $(jupyter --data-dir)/nbextensions \
     && cd $(jupyter --data-dir)/nbextensions \
     && git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding
+
 #RUN jupyter nbextension enable vim_binding/vim_binding
-
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager
-
-#https://github.com/jwkvam/jupyterlab_vim
-RUN jupyter labextension install jupyterlab_vim
 
 #RUN jt -altp -f roboto -fs 90 -tfs 90 -nfs 90 -dfs 80 -ofs 80 -cellw 98% -T
 
@@ -57,11 +46,7 @@ COPY jupyter_notebook_config.py /home/.jupyter/
 
 WORKDIR /home/notebooks
 
-
-RUN jupyter lab build
-
 EXPOSE 8888
-EXPOSE 8889
 
 # Executing supervisord
 CMD ["supervisord", "-n"]
