@@ -23,13 +23,12 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      PGDATA: /var/lib/postgresql/data
       POSTGRES_DB: db
-      POSTGRES_INITDB_ARGS: " "
     ports:
         - 127.0.0.1:5432:5432
-    volumes:
-        - ../postgres_db:/var/lib/postgresql/data
+    #volumes:
+    #   -#volume ../postgres_db/data:/var/lib/postgresql/data
+
   pgadmin:
     restart: always
     container_name: pgadmin
@@ -39,8 +38,7 @@ services:
     ports:
         - 127.0.0.1:5050:5050
     volumes:
-        - ../postgres_db:/tmp
-        - ../postgres_db:/data
+        - ../postgres_db/tmp:/tmp
     links:
       - "db:database"
     environment:
