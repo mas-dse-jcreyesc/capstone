@@ -32,7 +32,12 @@ cleandb: stop
 	docker rmi docker_db | true
 	docker rmi $(docker images -f "dangling=true" -q) | true
 
-cleanall: cleanadmin cleanpython cleandb
+cleanmongo: stop
+	docker rm mongo | true
+	docker rmi docker_mongo | true
+	docker rmi $(docker images -f "dangling=true" -q) | true
+
+cleanall: cleanadmin cleanpython cleandb cleanmongo prep
 
 cleandangling:
 	docker rmi $(docker images -f "dangling=true" -q) | true
@@ -40,8 +45,12 @@ cleandangling:
 stop:
 	docker-compose stop
 
-start:
+start: prep
 	docker-compose up -d
 
-build: stop
+build: stop prep
 	docker-compose build
+
+prep:
+	mkdir -p ../postgres_db/tmp
+	mkdir -p ../mongo_db
