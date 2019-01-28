@@ -11,16 +11,10 @@ info:
 	@echo
 	@echo "Advanced:"
 	@echo "\tmake build		# Build containes but don't start them"
-	@echo "\tmake cleanadmin		# For new pgAdmin"
 	@echo "\tmake cleanpython	# For new Jupyter/Python"
 	@echo "\tmake cleandb		# For new PostgreSQL"
 	@echo
 	@echo
-
-cleanadmin: stop
-	docker rm pgadmin | true
-	docker rmi docker_pgadmin | true
-	docker rmi $(docker images -f "dangling=true" -q) | true
 
 cleanpython: stop
 	docker rm jupyter | true
@@ -37,7 +31,7 @@ cleanmongo: stop
 	docker rmi docker_mongo | true
 	docker rmi $(docker images -f "dangling=true" -q) | true
 
-cleanall: cleanadmin cleanpython cleandb cleanmongo prep
+cleanall: cleanpython cleandb cleanmongo prep
 
 cleandangling:
 	docker rmi $(docker images -f "dangling=true" -q) | true

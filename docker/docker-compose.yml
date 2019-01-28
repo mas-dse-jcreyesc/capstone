@@ -30,21 +30,6 @@ services:
         - 127.0.0.1:5432:5432
     volumes:
         - ../postgres_db:/var/lib/postgresql/data
-  pgadmin:
-    restart: always
-    container_name: pgadmin
-    build:
-        context: .
-        dockerfile: Dockerfile.pgadmin
-    ports:
-        - 127.0.0.1:5050:5050
-    volumes:
-        - ../postgres_db:/tmp
-        - ../postgres_db:/data
-    links:
-      - "db:database"
-    environment:
-        SERVER_PORT: 5050
 
   mongo:
     image: mongo
