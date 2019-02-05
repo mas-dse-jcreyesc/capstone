@@ -13,8 +13,8 @@ RUN apt-get update \
 
 RUN pip3 install --upgrade pip
 RUN pip3 install jupyter notebook pydotplus \
-        jupyterthemes ipykernel numpy scipy pandas xmltodict \
-        matplotlib plotly tabulate sklearn pyarrow stop_words \
+        jupyterthemes ipykernel numpy scipy pandas xmltodict irsx \
+        matplotlib tabulate sklearn pyarrow stop_words \
         pymysql pymongo sqlalchemy Pillow nltk psycopg2-binary \
         pysocks requests[socks] Scrapy beautifulsoup4 wget distance \
         jupyter_contrib_nbextensions ipywidgets py_stringmatching \
