@@ -1,3 +1,4 @@
+IRSX_*
 supervisord.*
 .local
 old
