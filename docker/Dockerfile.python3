@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 RUN apt-get update \
-    && apt-get install -y build-essential vim curl git wget supervisor graphviz \
+    && apt-get install -y vim curl git wget supervisor \
     && apt-get -y autoremove \
     && apt-get -y clean  \
     && apt-get autoclean  \
@@ -12,31 +12,23 @@ RUN apt-get update \
     && apt-get install -y python3 python3-pip python3-dev
 
 RUN pip3 install --upgrade pip
-RUN pip3 install jupyter notebook pydotplus \
-        jupyterthemes ipykernel numpy scipy pandas xmltodict irsx \
-        matplotlib tabulate sklearn pyarrow stop_words \
-        pymysql pymongo sqlalchemy Pillow nltk psycopg2-binary \
-        pysocks requests[socks] Scrapy beautifulsoup4 wget distance \
-        jupyter_contrib_nbextensions ipywidgets py_stringmatching \
-        jupyter_nbextensions_configurator
 
-#RUN rm -r /root/.cache/pip
+# jupyter notebook pydotplus \
+# jupyterthemes ipykernel numpy scipy pandas xmltodict irsx \
+# matplotlib tabulate sklearn pyarrow stop_words \
+# pymysql pymongo sqlalchemy Pillow nltk psycopg2-binary \
+# pysocks requests[socks] Scrapy beautifulsoup4 wget distance \
+# jupyter_contrib_nbextensions ipywidgets py_stringmatching \
+# jupyter_nbextensions_configurator
 
-RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension
-RUN jupyter contrib nbextension install --system
-RUN jupyter nbextensions_configurator enable --system
+RUN pip3 install jupyter import_ipynb jupyterthemes \
+        jupyter_contrib_nbextensions ipywidgets \
+        ipykernel numpy scipy pandas xmltodict irsx \
+        matplotlib stop_words pymongo nltk \
+        wget distance jupyter_nbextensions_configurator
 
-# download vim extension
-RUN mkdir -p $(jupyter --data-dir)/nbextensions \
-    && cd $(jupyter --data-dir)/nbextensions \
-    && git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding
+RUN rm -r /root/.cache/pip
 
-#RUN jupyter nbextension enable vim_binding/vim_binding
-
-#RUN jt -altp -f roboto -fs 90 -tfs 90 -nfs 90 -dfs 80 -ofs 80 -cellw 98% -T
-
-# Adding the configuration file of the Supervisor
-ADD supervisord.conf /etc/
 
 ENV HOME /home
 RUN mkdir -p /home/notebooks
@@ -45,6 +37,24 @@ RUN mkdir -p /home/.jupyter/nbconfig
 COPY jupyter_notebook_config.py /home/.jupyter/
 
 WORKDIR /home/notebooks
+RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension
+RUN jupyter contrib nbextension install --system
+RUN jupyter nbextensions_configurator enable --system
+
+RUN mkdir -p $(jupyter --data-dir)/nbextensions
+
+# download vim extension
+RUN cd $(jupyter --data-dir)/nbextensions \
+    && git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding \
+    && chmod -R go-w vim_binding \
+    && jupyter nbextension enable vim_binding/vim_binding
+
+RUN pip3 install --upgrade jupyterthemes
+RUN jt -altp -f roboto -fs 90 -tfs 90 -nfs 90 -dfs 80 -ofs 80 -cellw 98% -T
+
+# Adding the configuration file of the Supervisor
+ADD supervisord.conf /etc/
+
 
 EXPOSE 8888
 
