@@ -1,11 +1,12 @@
-import abc
+from abc import ABC, abstractmethod
 
 
-class IrsDataset(abc.ABC):
+class IrsDataset(ABC):
     """
     This is an abstract class to specify the interface needed from the data set
     this interface will be used for loading the data for external use like clustering
     """
+    @abstractmethod
     def __iter__(self):
         """
         REQUIRED for iterable on-line clustering.
@@ -13,6 +14,7 @@ class IrsDataset(abc.ABC):
         """
         pass
 
+    @abstractmethod
     def __len__(self):
         """
         should return the number of tuples in the database (rows)
@@ -20,6 +22,7 @@ class IrsDataset(abc.ABC):
         """
         pass
 
+    @abstractmethod
     def open_db_connection(self):
         """
         method to open the db connection
@@ -27,6 +30,7 @@ class IrsDataset(abc.ABC):
         """
         pass
 
+    @abstractmethod
     def close_db_connection(self):
         """
         method to close the db connection
@@ -34,6 +38,7 @@ class IrsDataset(abc.ABC):
         """
         pass
 
+    @abstractmethod
     def get_as_matrix(self):
         """
         returns matrix of data
@@ -41,6 +46,7 @@ class IrsDataset(abc.ABC):
         """
         pass
 
+    @abstractmethod
     def get_shape(self):
         """
         method to return the shape of the data
@@ -48,6 +54,7 @@ class IrsDataset(abc.ABC):
         """
         pass
 
+    @abstractmethod
     def get_feature_columns(self):
         """
         method that returns array of feature names

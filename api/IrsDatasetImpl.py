@@ -1,6 +1,5 @@
 import numpy as np
-from IrsDatasetAbstract import IrsDataset
-
+from api.IrsDatasetAbstract import IrsDataset
 
 class IrsDatasetImpl(IrsDataset):
     def __iter__(self):
