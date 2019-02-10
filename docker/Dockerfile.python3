@@ -19,7 +19,6 @@ RUN pip3 install --upgrade pip
 # pymysql pymongo sqlalchemy Pillow nltk psycopg2-binary \
 # pysocks requests[socks] Scrapy beautifulsoup4 wget distance \
 # jupyter_contrib_nbextensions ipywidgets py_stringmatching \
-# jupyter_nbextensions_configurator
 
 RUN pip3 install jupyter import_ipynb jupyterthemes \
         jupyter_contrib_nbextensions ipywidgets \
@@ -34,6 +33,11 @@ ENV HOME /home
 RUN mkdir -p /home/notebooks
 RUN mkdir -p /home/.jupyter
 RUN mkdir -p /home/.jupyter/nbconfig
+
+ENV IRSX_CACHE_DIRECTORY=/home/notebooks/IRSX_CACHE/
+ENV IRSX_INDEX_DIRECTORY=/home/notebooks/IRSX_CACHE/
+ENV IRSX_WORKING_DIRECTORY=/home/notebooks/IRSX_CACHE/
+
 COPY jupyter_notebook_config.py /home/.jupyter/
 
 WORKDIR /home/notebooks
@@ -57,6 +61,9 @@ ADD supervisord.conf /etc/
 
 
 EXPOSE 8888
+
+ENV PYTHONPATH ".:/home/notebooks/:/home/notebooks/api"
+
 
 # Executing supervisord
 CMD ["supervisord", "-n"]
