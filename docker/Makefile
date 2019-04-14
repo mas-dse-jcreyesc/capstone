@@ -1,5 +1,7 @@
 default: info
 
+all: build
+
 info:
 	@echo
 	@echo "Easy way to build and run your UCSD-MAS env."
@@ -19,19 +21,20 @@ info:
 cleanpython: stop
 	docker rm jupyter | true
 	docker rmi docker_python | true
-	docker rmi $(docker images -f "dangling=true" -q) | true
 
 cleandb: stop
 	docker rm postgres | true
 	docker rmi docker_db | true
-	docker rmi $(docker images -f "dangling=true" -q) | true
+
+cleanpgadmin: stop
+	docker rm pgadmin | true
+	docker rmi dpage/pgadmin4 | true
 
 cleanmongo: stop
 	docker rm mongo | true
-	docker rmi docker_mongo | true
-	docker rmi $(docker images -f "dangling=true" -q) | true
+	docker rmi mongo | true
 
-cleanall: cleanpython cleandb cleanmongo prep
+cleanall: cleanpython cleanpgadmin cleandb cleanmongo prep
 
 cleandangling:
 	docker rmi $(docker images -f "dangling=true" -q) | true

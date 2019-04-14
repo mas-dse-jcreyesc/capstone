@@ -1,42 +1,73 @@
 version: '3.1'
+
 services:
-  python:
-    restart: always
-    container_name: jupyter
-    build:
-        context: .
-        dockerfile: Dockerfile.python3
-    ports:
-        - 127.0.0.1:8888:8888
-        - 127.0.0.1:8889:8889
-    volumes:
-        - ../:/home/notebooks/
-    links:
-      - "db:database"
+    python:
+        restart: unless-stopped
+        container_name: jupyter
+        build:
+            context: .
+            dockerfile: Dockerfile.python3
+        ports:
+            - 127.0.0.1:8888:8888
+        volumes:
+            - ../:/home/notebooks/
+        #links:
+            #- "db:database"
+        networks:
+            - internal-network
 
-  db:
-    restart: always
-    container_name: postgres
-    build:
-        context: .
-        dockerfile: Dockerfile.postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      PGDATA: /var/lib/postgresql/data
-      POSTGRES_DB: db
-      POSTGRES_INITDB_ARGS: " "
-    ports:
-        - 127.0.0.1:5433:5433
-    volumes:
-        - ../postgres_db:/var/lib/postgresql/data
+    mongo:
+        image: mongo
+        container_name: mongo
+        restart: unless-stopped
+        volumes:
+            - ../mongo_db:/data/db
+        ports:
+            - 127.0.0.1:27017:27017
+            - 127.0.0.1:28017:28017
+        networks:
+            - internal-network
 
-  mongo:
-    image: mongo
-    restart: always
-    volumes:
-        - ../mongo_db:/data/db
-        #- ../mongo_db:/data/configdb
-    ports:
-        - 127.0.0.1:27017:27017
-        - 127.0.0.1:28017:28017
+    db:
+        restart: unless-stopped
+        container_name: postgres
+        build:
+            context: .
+            dockerfile: Dockerfile.postgres
+        volumes:
+            - ../postgres_db:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            PGDATA: /var/lib/postgresql/data/pgdata
+            POSTGRES_DB: db
+            POSTGRES_INITDB_ARGS: " "
+        ports:
+            - 127.0.0.1:5432:5432
+        networks:
+            - internal-network
+
+
+    pgadmin:
+        restart: unless-stopped
+        container_name: pgadmin
+        image: dpage/pgadmin4
+        ports:
+            - 127.0.0.1:5050:80
+        volumes:
+            - ../postgres_db:/root/.pgadmin
+        #links:
+            #- "db:database"
+        networks:
+            - internal-network
+        environment:
+            #SERVER_PORT: 5050
+            PGADMIN_DEFAULT_EMAIL: pgadmin
+            PGADMIN_DEFAULT_PASSWORD: pgadmin
+        depends_on:
+            - db
+
+networks:
+    internal-network:
+        driver: bridge
+
