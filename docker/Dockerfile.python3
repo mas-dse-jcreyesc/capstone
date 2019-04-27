@@ -23,7 +23,7 @@ RUN pip3 install --upgrade pip
 RUN pip3 install jupyter import_ipynb jupyterthemes \
         jupyter_contrib_nbextensions ipywidgets \
         ipykernel numpy scipy pandas xmltodict irsx \
-        matplotlib stop_words pymongo nltk \
+        matplotlib stop_words pymongo nltk bs4 \
         wget distance jupyter_nbextensions_configurator \
         scikit-learn seaborn joblib
 
