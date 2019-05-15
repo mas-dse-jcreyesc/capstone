@@ -25,7 +25,8 @@ RUN pip3 install jupyter import_ipynb jupyterthemes \
         ipykernel numpy scipy pandas xmltodict irsx \
         matplotlib stop_words pymongo nltk bs4 \
         wget distance jupyter_nbextensions_configurator \
-        scikit-learn seaborn joblib
+        scikit-learn seaborn joblib \
+        uszipcode
 
 RUN rm -r /root/.cache/pip
 
