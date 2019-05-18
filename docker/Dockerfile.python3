@@ -26,7 +26,7 @@ RUN pip3 install jupyter import_ipynb jupyterthemes \
         matplotlib stop_words pymongo nltk bs4 \
         wget distance jupyter_nbextensions_configurator \
         scikit-learn seaborn joblib \
-        uszipcode
+        uszipcode tqdm tensorflow tensorflow-hub
 
 RUN rm -r /root/.cache/pip
 
