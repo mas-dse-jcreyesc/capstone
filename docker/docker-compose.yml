@@ -67,6 +67,20 @@ services:
         depends_on:
             - db
 
+    webserver:
+        build:
+            context: ./
+            dockerfile: Dockerfile.plotly
+        environment: 
+            - VIRTUAL_HOST=dashsimple1.arthoughts.local
+        volumes:
+            - ../postgres_db:/var/lib/postgresql/data
+            - ../web_application:/myworkdir
+        networks:
+            - internal-network
+        ports:
+            - '80:8050'
+
 networks:
     internal-network:
         driver: bridge

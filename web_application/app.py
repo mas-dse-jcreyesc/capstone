@@ -93,4 +93,4 @@ def update_output(input1):
     return u'Input 1 is "{}"'.format(input1)
 
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run_server(host="0.0.0.0", debug=True)

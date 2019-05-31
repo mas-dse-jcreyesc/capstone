@@ -1,0 +1,11 @@
+FROM python:3
+ 
+COPY requirements-simple.txt /
+RUN pip install -r /requirements-simple.txt
+ 
+RUN mkdir /myworkdir
+#COPY ../web_application/app.py /myworkdir
+WORKDIR /myworkdir
+ 
+EXPOSE 8050
+CMD ["python", "./app.py"]
