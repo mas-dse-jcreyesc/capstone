@@ -75,7 +75,7 @@ services:
             - VIRTUAL_HOST=dashsimple1.arthoughts.local
         volumes:
             - ../postgres_db:/var/lib/postgresql/data
-            - ../web_application:/myworkdir
+            - ../WebApp:/myworkdir
         networks:
             - internal-network
         ports:
