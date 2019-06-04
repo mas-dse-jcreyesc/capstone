@@ -8,12 +8,36 @@ import pandas as pd
 import math
 from nltk.stem import WordNetLemmatizer
 import re
+import math
+# from sklearn import preprocessing
 
+# scaler = preprocessing.MinMaxScaler()
 LEMMA = WordNetLemmatizer()
 
 app = dash.Dash()
 
 df = pd.read_csv('./data/data_for_viz.csv', dtype= {'EIN':'object'})
+df = df.fillna(0)
+
+def distance(origin, destination):
+    lat1, lon1 = origin
+    lat2, lon2 = destination
+    radius = 6371 # km
+
+    dlat = math.radians(lat2-lat1)
+    dlon = math.radians(lon2-lon1)
+    a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(math.radians(lat1)) \
+        * math.cos(math.radians(lat2)) * math.sin(dlon/2) * math.sin(dlon/2)
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+    d = radius * c
+
+    return d
+
+
+# def scaleColumns(df, cols_to_scale, scaler):
+#     for col in cols_to_scale:
+#         df[col] = pd.DataFrame(scaler.fit_transform(pd.DataFrame(df[col])),columns=[col])
+#     return df
 
 
 def new_data(org, limit, plot):
@@ -27,12 +51,15 @@ def new_data(org, limit, plot):
     if col:
         fin = int(df[df[col]==org]['fin_labels'].values)
         text = int(df[df[col]==org]['text_labels'].values)
-        geo = int(df[df[col]==org]['geo_labels'].values)
+#         geo = int(df[df[col]==org]['geo_labels'].values)
 
-        df_new = df[df['fin_labels'] == fin].append(df[df['text_labels'] == text]).append(df[df['geo_labels'] == geo])
-        df_new = df_new[['EIN', 'name', 'fin_labels', 'text_labels', 'geo_labels', 'latitude', 'longitude', 
-                         'fin_dist_'+str(fin), 'text_dist_'+str(text), 'geo_dist_'+str(geo)]]
+        df_new = df[df['fin_labels'] == fin].append(df[df['text_labels'] == text])#.append(df[df['geo_labels'] == geo])
+        df_new = df_new[['EIN', 'name', 'fin_labels', 'text_labels', 'latitude', 'longitude', 
+                         'fin_dist_'+str(fin), 'text_dist_'+str(text)]]
         df_new['color'] = [1 if c == org else 0 for c in df_new[col]]
+        
+        df_new['geo_dist'] = df_new.apply(lambda x: distance(df_new.loc[df_new[col] == org][['latitude','longitude']].values[0].tolist(),[x['latitude'],x['longitude']]), axis=1)
+#         df_new = scaleColumns(df_new, list(['geo_dist']), scaler)
         
         color = df_new['color'].values
         if len(color) > limit:
@@ -45,7 +72,7 @@ def new_data(org, limit, plot):
         if plot == 'scatter':
             x = df_new['fin_dist_'+str(fin)].values
             y = df_new['text_dist_'+str(text)].values
-            z = df_new['geo_dist_'+str(geo)].values
+            z = df_new['geo_dist'].values
             
             if len(x) > limit:
                 x = x[:limit]
@@ -66,6 +93,7 @@ def new_data(org, limit, plot):
             return lat, lon, name, color
         else:
             return None
+        
     else:
         return None
 
@@ -179,10 +207,10 @@ def update_metrics_content(org, radio):
         fb1 = get_org_metric(org, 'fund_balance')
         l1 = get_org_metric(org, 'liabilities')
         return [html.P("Org Financials Against Peer Group"),
-                html.Div([html.H5("Gross Receipts: $"+str(gr1))], style={'padding-left':'30'}),
-                html.Div([html.H5("Revenue: $"+str(r1))], style={'padding-left':'30'}),
-                html.Div([html.H5("Fund Balance: $"+str(fb1))], style={'padding-left':'30'}),
-                html.Div([html.H5("Liabilities: $"+str(l1))], style={'padding-left':'30'})
+                html.Div([html.H5("Gross Receipts: "+'${:,.0f}'.format(gr1))], style={'padding-left':'30'}),
+                html.Div([html.H5("Revenue: "+'${:,.0f}'.format(r1))], style={'padding-left':'30'}),
+                html.Div([html.H5("Fund Balance: "+'${:,.0f}'.format(fb1))], style={'padding-left':'30'}),
+                html.Div([html.H5("Liabilities: "+'${:,.0f}'.format(l1))], style={'padding-left':'30'})
                ]
     elif radio == 'T':
         mission = get_org_metric(org, 'mission')
@@ -243,7 +271,8 @@ def update_metrics_plot(org, radio):
                                 color = 'rgb(26, 82, 118)'
                             ),
                           opacity = 0.6,
-                          name = 'Peer Group'
+                          name = 'Peer Group',
+                          hoverinfo='name'
                         ),
                         go.Scatterpolar(
                           r = [gr1, r1, fb1, l1, gr1],
@@ -254,7 +283,8 @@ def update_metrics_plot(org, radio):
                                 color = 'rgb(244,208,63)'
                             ),
                           opacity = 0.6,
-                          name = 'Org'
+                          name = 'Org',
+                          hoverinfo='name'
                         )
                     ], 
                     "layout": go.Layout(
@@ -272,7 +302,7 @@ def update_metrics_plot(org, radio):
         lat, lon, name, color = new_data(org, 100000, 'map')
 #         name = get_org_metric(org, 'name')
         trace = [go.Scattergeo(locationmode='USA-states', lon=lon, lat=lat,
-                           text=name, showlegend=False, mode='markers',
+                           text=name, hoverinfo='text', showlegend=False, mode='markers',
                            marker={'size': 8, 'opacity': 0.8, 'symbol': "diamond", "color": color, 
                                    'colorscale': [[0, 'rgb(26, 82, 118)'],[1, 'rgb(244,208,63)']],
                                    'line': {'width': 0.1, 'color': 'rgba(102, 102, 102)'}})]
@@ -304,7 +334,7 @@ def update_scatter(org):
     x, y, z, name, color = new_data(org, 100000, 'scatter')
     
     trace = [go.Scatter3d(
-        x=x, y=y, z=z, text=name,
+        x=x, y=y, z=z, text=name, hoverinfo='text',
         mode='markers', marker={'size': 8, 'color': color, 
                                 'colorscale': [[0, 'rgb(26, 82, 118)'],[1, 'rgb(244,208,63)']]
                                 , 'opacity': 0.8, 
