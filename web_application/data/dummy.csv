@@ -1,0 +1,20 @@
+EIN,name,mission,topic,county,latitude,longitude,gross_receipts,revenue,fund_balance,liabilities,fin_labels,text_labels,geo_labels,fin_dist_1,fin_dist_2,fin_dist_3,text_dist_1,text_dist_2,text_dist_3,text_dist_4,geo_dist_1,geo_dist_2
+111,ORG_A,This is the ~word1~ mission statement for ORG_A,"word1, word2, etc.",A County,41.979595,-87.90446417,100000,100000,100000,100000,1,1,1,0.1,0.1,0.1,0.1,0.2,0.1,0.1,0.3,0.1
+222,ORG_E,This is the word1 mission statement for ORG_E,"word1, word2, etc.",E County,33.64044444,-84.42694444,200000,200000,200000,200000,1,1,1,0,0.1,0.1,0.3,0.3,0.2,0.1,0.1,0.3
+333,ORG_C,This is the word1 mission statement for ORG_C,"word1, word2, etc.",C County,32.89595056,-97.0372,300000,300000,300000,300000,2,1,2,0.3,0.2,0.1,0.2,0.2,0.2,0.1,0.3,0.1
+444,ORG_D,This is the word1 mission statement for ORG_D,"word1, word2, etc.",D County,33.43416667,-112.0080556,400000,400000,400000,400000,3,1,2,0.7,0.2,0.2,0.2,0.1,0.3,0.2,0.1,0.1
+555,ORG_B,This is the word1 mission statement for ORG_B,"word1, word2, etc.",B County,39.85840806,-104.6670019,500000,500000,500000,500000,3,1,2,0.7,0.3,0.2,0.2,0.3,0.3,0.2,0.3,0.3
+666,ORG_F,This is the word1 mission statement for ORG_F,"word1, word2, etc.",F County,29.98047222,-95.33972222,600000,600000,600000,600000,1,2,1,0.1,0.5,0.4,0.7,0.3,0.4,0.6,0.3,0.7
+777,ORG_G,This is the word1 mission statement for ORG_G,"word1, word2, etc.",G County,37.61900194,-122.3748433,700000,700000,700000,700000,2,2,1,0.7,0.6,0.6,0.7,0.4,0.3,0.5,0.5,0.3
+888,ORG_H,This is the word1 mission statement for ORG_H,"word1, word2, etc.",H County,33.94253611,-118.4080744,800000,800000,800000,800000,3,2,2,0.7,0.3,0.3,0.5,0.3,0.7,0.5,0.5,0.3
+999,ORG_I,This is the word1 mission statement for ORG_I,"word1, word2, etc.",I County,28.42888889,-81.31602778,900000,900000,900000,900000,1,3,2,0.1,0.7,0.9,0.9,0.7,0.8,0.7,0.9,0.8
+0,ORG_J,This is the word1 mission statement for ORG_J,"word1, word2, etc.",J County,35.21401111,-80.94312583,1000000,1000000,1000000,1000000,1,3,2,0,0.9,0.7,0.9,0.8,0.7,0.7,0.7,0.9
+1111,ORG_K,This is the word1 mission statement for ORG_K,"word1, word2, etc.",K County,40.78838778,-111.9777731,1100000,1100000,1100000,1100000,2,3,1,0.5,0.7,0.7,0.7,0.8,0.9,0.9,0.8,0.9
+2222,ORG_L,This is the word1 mission statement for ORG_L,"word1, word2, etc.",L County,27.97547222,-82.53325,1200000,1200000,1200000,1200000,3,3,1,0.8,0.7,0.9,0.9,0.7,0.9,0.7,0.9,0.9
+3333,ORG_M,This is the word1 mission statement for ORG_M,"word1, word2, etc.",M County,40.69249722,-74.16866056,1300000,1300000,1300000,1300000,3,3,2,0.9,0.9,0.8,0.9,0.7,0.9,0.9,0.9,0.7
+4444,ORG_N,This is the word1 mission statement for ORG_N,"word1, word2, etc.",N County,36.08036111,-115.1523333,1400000,1400000,1400000,1400000,3,3,2,0.9,0.7,0.9,0.9,0.9,0.7,0.9,0.9,0.8
+5555,ORG_O,This is the word1 mission statement for ORG_O,"word1, word2, etc.",O County,39.87195278,-75.24114083,1500000,1500000,1500000,1500000,3,3,1,0.8,0.7,0.8,0.8,0.7,0.7,0.8,0.8,0.9
+6666,ORG_P,This is the word1 mission statement for ORG_P,"word1, word2, etc.",P County,44.88054694,-93.2169225,1600000,1600000,1600000,1600000,3,3,1,0.7,0.7,0.8,0.7,0.9,0.9,0.7,0.7,0.8
+7777,ORG_Q,This is the word1 mission statement for ORG_Q,"word1, word2, etc.",Q County,47.44898194,-122.3093131,1700000,1700000,1700000,1700000,2,4,2,0.3,0.7,0.8,0.8,0.7,0.8,0.9,0.9,0.9
+8888,ORG_R,This is the word1 mission statement for ORG_R,"word1, word2, etc.",R County,40.77724306,-73.87260917,1800000,1800000,3,4,2,0.8,0.9,0.9,0.8,0.8,0.7,0.7,0.8,0.7,,
+9999,ORG_S,This is the word1 mission statement for ORG_S,"word1, word2, etc.",S County,42.21205889,-83.34883583,1900000,1900000,3,4,2,0.8,0.8,0.9,0.8,0.8,0.9,0.8,0.8,0.8,,
