@@ -12,7 +12,7 @@ import pandas as pd
 import tensorflow as tf
 import tensorflow_hub as hub
 
-from text_preprocessing import preprocess_text
+from .preprocessing import preprocess_text
 
 
 #----------------------------------------#
@@ -25,7 +25,7 @@ MOD_PATH = 'https://tfhub.dev/google/universal-sentence-encoder/2'
 #------------------------------------------------------------------------------#
 # Main text data cleaning function 
 #------------------------------------------------------------------------------#
-def clean_data(df, mode='990'):
+def clean_data(df):
     """
     Function for receiving a dataframe of extracted 990 fields and processing
     them in into a format that is compatible with embedding via the Universal
@@ -36,29 +36,17 @@ def clean_data(df, mode='990'):
     
     Input(s):
     - df (pandas df)
-    - mode (str): tag specifying type of processing to use
     """
-    if mode not in ['990', 'website']:
-        raise ModeNotValidException('Mode is not a valid selection')
     
     # Get valid text fields
     uniqueID = 'EIN'
     org_name = 'OrganizationName'
-    if mode=='990':
-        txt_cols = [
-            'OrganizationName',
-            'Desc',
-            'ActivityOrMissionDesc',
-            'MissionDesc'
-        ]
-    elif mode=='website':
-        txt_cols = [
-            'OrganizationName',
-            'Desc',
-            'ActivityOrMissionDesc',
-            'MissionDesc',
-            'WebSnippet'
-        ]
+    txt_cols = [
+        'OrganizationName',
+        '/IRS990/Desc',
+        '/IRS990/ActivityOrMissionDesc',
+        '/IRS990/MissionDesc'
+    ]
     
     # Aggregate relevant text fields into single entities
     agg_indx = []
