@@ -12,7 +12,7 @@ import pandas as pd
 import tensorflow as tf
 import tensorflow_hub as hub
 
-from .preprocessing import preprocess_text
+from api.text_preprocessing import preprocess_text
 
 
 #----------------------------------------#
@@ -58,7 +58,7 @@ def clean_data(df):
             tmp_text.append(row[f])
         
         # Preprocess and append
-        agg_indx.append(row[uniqueID])
+        agg_indx.append(int(row[uniqueID]))
         agg_text.append(preprocess_text(' '.join(tmp_text)))
         agg_name.append(row[org_name])
     

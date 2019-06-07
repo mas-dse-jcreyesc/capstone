@@ -1,3 +1,4 @@
+*.csv
 IRSX_*
 supervisord.*
 .local
