@@ -14,7 +14,6 @@ info:
 	@echo "Advanced:"
 	@echo "\tmake build		# Build containes but don't start them"
 	@echo "\tmake cleanpython	# For new Jupyter/Python"
-	@echo "\tmake cleandb		# For new PostgreSQL"
 	@echo
 	@echo
 
@@ -22,19 +21,11 @@ cleanpython: stop
 	docker rm jupyter | true
 	docker rmi docker_python | true
 
-cleandb: stop
-	docker rm postgres | true
-	docker rmi docker_db | true
-
-cleanpgadmin: stop
-	docker rm pgadmin | true
-	docker rmi dpage/pgadmin4 | true
-
 cleanmongo: stop
 	docker rm mongo | true
 	docker rmi mongo | true
 
-cleanall: cleanpython cleanpgadmin cleandb cleanmongo prep
+cleanall: cleanpython cleanmongo prep
 
 cleandangling:
 	docker rmi $(docker images -f "dangling=true" -q) | true
@@ -49,5 +40,6 @@ build: stop prep
 	docker-compose build
 
 prep:
-	mkdir -p ../postgres_db/tmp
+	rm -rf ../postgres_db
+	rm -rf ../supervisord.*
 	mkdir -p ../mongo_db

@@ -58,7 +58,7 @@ def clean_data(df):
             tmp_text.append(row[f])
         
         # Preprocess and append
-        agg_indx.append(int(row[uniqueID]))
+        agg_indx.append(row[uniqueID])
         agg_text.append(preprocess_text(' '.join(tmp_text)))
         agg_name.append(row[org_name])
     

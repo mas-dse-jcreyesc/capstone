@@ -5,3 +5,4 @@ dash-html-components
 dash-table-experimentS
 plotly
 pandas
+nltk

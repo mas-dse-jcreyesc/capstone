@@ -58,14 +58,10 @@ RUN cd $(jupyter --data-dir)/nbextensions \
 RUN pip3 install --upgrade jupyterthemes
 RUN jt -altp -f roboto -fs 90 -tfs 90 -nfs 90 -dfs 80 -ofs 80 -cellw 98% -T
 
-# Adding the configuration file of the Supervisor
-ADD supervisord.conf /etc/
-
 
 EXPOSE 8888
 
 ENV PYTHONPATH ".:/home/notebooks/:/home/notebooks/api"
 
 
-# Executing supervisord
-CMD ["supervisord", "-n"]
+CMD jupyter notebook --allow-root --ip=* --port=8888 --no-browser --notebook-dir=/home/notebooks
