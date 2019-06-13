@@ -50,3 +50,19 @@ Management of Github repo and Docker environment
 ### ARCHITECTURE
 Our data pipeline was divided into different modules to accomplish discrete tasks. In our final product, we used Python and Docker throughout as our common language and platform. The purpose of our first module (Form Data Processor) was to gather and fetch information from the AWS repository using the IRSX tool for each of the organizations in a giant manifest. We had an additional experimental module (Website Data Processor) which additionally scraped the HTML text of the organization’s website listed on the form 990. The XML payload was parsed and stored as a document in a MongoDB instance. We then had a clustering module (Cluster Processor) which read data samples from the MongoDB instance to create three labels or cluster IDs for each organization: one for each axis of comparison. These labels were loaded back into the MongoDb document for persistence. Finally our last module (App Web Server) reads from the database to create visualizations for high level queries, or a given input organization
 
+
+### DOI
+Identifier: doi:10.6075/J079431XIdentifier
+https://doi.org/10.6075/J079431X
+
+Creators:
+* Tai, Howard;
+* Hansen, Erin;
+* Nagda, Jeet;
+* Pimentel, Carlos;
+* Reyes, Juan
+
+Title:	Classy Data Analysis: Mapping the U.S. Non-Profit Space
+Publisher:	UC San Diego Library Digital Collections
+Publication year:	2019
+Resource type:	Dataset/Dataset
