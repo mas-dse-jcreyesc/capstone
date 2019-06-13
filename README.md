@@ -62,7 +62,9 @@ Creators:
 * Pimentel, Carlos;
 * Reyes, Juan
 
+```
 Title:	Classy Data Analysis: Mapping the U.S. Non-Profit Space
 Publisher:	UC San Diego Library Digital Collections
 Publication year:	2019
 Resource type:	Dataset/Dataset
+```
